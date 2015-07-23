@@ -1,0 +1,35 @@
+.timepicker * {
+  box-sizing: border-box;
+}
+
+.timepicker {
+  position: relative;
+}
+
+.timepicker-display {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 12.5rem;
+  background: #d0d0d0;
+  padding: 0.35rem 1rem;
+}
+
+.timepicker input:focus + .timepicker-display {
+  display: block;
+}
+
+.timepicker-field {
+  width: 1.2rem;
+  padding: 0 0.5rem;
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.timepicker .arrow-up {
+  margin-bottom: 1rem;
+}
+
+.timepicker .arrow-down {
+  margin-top: 1rem;
+}
