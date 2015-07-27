@@ -1,6 +1,6 @@
 {
   "name": "ember-cli-timepicker-lite",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Simple timepicker for Ember applications",
   "directories": {
     "doc": "doc",
