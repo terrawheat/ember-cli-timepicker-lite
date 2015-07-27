@@ -6,17 +6,15 @@ export default Ember.Component.extend({
   tagName: 'span',
   classNames: ['timepicker'],
 
-  in24hr: true,
-
   hours: '12',
   minutes: '58',
   seconds: '00',
   meridian: 'am',
   timezone: 'UTC',
 
-  hourInterval: 1,
-  minuteInterval: 1,
-  secondInteral: 1,
+  hoursInterval: 1,
+  minutesInterval: 1,
+  secondsInteral: 1,
 
   showHours: true,
   showMinutes: true,
@@ -26,96 +24,44 @@ export default Ember.Component.extend({
     return this.get('in24hr') === false;
   }),
 
+  limits: {
+    hours: { min: 1, max: 23 },
+    minutes: { min: 0, max: 59 },
+    seconds: { min: 0, max: 59 },
+  },
+
   actions: {
     increase: function (field) {
-      this.get('increase')[field].call(this);
+      this.get('increase').apply(this, [field, this.get(`${field}Interval`)]);
     },
     decrease: function (field) {
-      this.get('decrease')[field].call(this);
+      this.get('decrease').apply(this, [field, this.get(`${field}Interval`)]);
     }
   },
 
-  increase: {
-    hours: function (intervalOverride) {
-      var hours = Number(this.get('hours'));
-      var interval = intervalOverride || Number(this.get('hourInterval'));
-      var targetHours = hours + interval;
-      var limit = 12;
+  increase: function (field, interval) {
+    var value = Number(this.get(field));
+    var limit = this.get(`limits.${field}`);
 
-      if (this.get('in24hr')) {
-        limit = 24;
-      }
+    value += interval;
 
-      if (targetHours >= limit) {
-        targetHours = 1;
-      }
-
-      this.set('hours', String(targetHours));
-    },
-    minutes: function (intervalOverride) {
-      var minutes = Number(this.get('minutes'));
-      var interval = intervalOverride || Number(this.get('minuteInterval'));
-      var target = minutes + interval;
-
-      if (target >= 60) {
-        target = 0;
-        this.get('increase').hours.call(this, 1);
-      }
-
-      this.set('minutes', String(target));
-    },
-    seconds: function () {
-      var seconds = Number(this.get('seconds'));
-      var target = seconds + Number(this.get('secondInterval'));
-
-      if (target >= 60) {
-        target = 0;
-        this.get('increase').minutes.call(this, 1);
-      }
-
-      this.set('seconds', String(target));
+    if (value > limit.max) {
+      value = limit.min;
     }
+
+    this.set(field, value);
   },
 
-  decrease: {
-    hours: function (intervalOverride) {
-      var hours = Number(this.get('hours'));
-      var interval = intervalOverride || Number(this.get('hourInterval'));
-      var targetHours = hours - interval;
-      var limit = 12;
+  decrease: function (field, interval) {
+    var value = Number(this.get(field));
+    var limit = this.get(`limits.${field}`);
 
-      if (this.get('in24hr')) {
-        limit = 23;
-      }
+    value -= interval;
 
-      if (targetHours < 1) {
-        targetHours = limit;
-      }
-
-      this.set('hours', String(targetHours));
-    },
-    minutes: function (intervalOverride) {
-      var minutes = Number(this.get('minutes'));
-      var interval = intervalOverride || Number(this.get('minuteInterval'));
-      var target = minutes - interval;
-
-      if (target < 0) {
-        target = 59;
-        this.get('decrease').hours.call(this, 1);
-      }
-
-      this.set('minutes', String(target));
-    },
-    seconds: function () {
-      var seconds = Number(this.get('seconds'));
-      var target = seconds + Number(this.get('secondInterval'));
-
-      if (target < 0) {
-        target = 59;
-        this.get('decrease').minutes.call(this, 1);
-      }
-
-      this.set('seconds', String(target));
+    if (value < limit.min) {
+      value = limit.max;
     }
+
+    this.set(field, value);
   }
 });
