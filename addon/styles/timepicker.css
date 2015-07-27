@@ -7,7 +7,7 @@
 }
 
 .timepicker-display {
-  display: block;
+  display: none;
   position: absolute;
   top: 0;
   left: 12.5rem;
@@ -27,9 +27,11 @@
 }
 
 .timepicker .arrow-up {
+  cursor: pointer;
   margin-bottom: 1rem;
 }
 
 .timepicker .arrow-down {
+  cursor: pointer;
   margin-top: 1rem;
 }
