@@ -2,33 +2,33 @@
 <div class="timepicker-display">
   {{#if showHours}}
   <div class="timepicker-field timepicker-hour">
-    <div class="arrow-up">&#9650;</div>
-    <div class="timepicker-h">12</div>
-    <div class="arrow-down">&#9660;</div>
+    <div class="arrow-up" {{action 'increase' 'hours'}}>&#9650;</div>
+    <div class="timepicker-h">{{hours}}</div>
+    <div class="arrow-down" {{action 'decrease' 'hours'}}>&#9660;</div>
   </div>
   {{/if}}
   {{#if showMinutes}}
   <div class="timepicker-field timepicker-minute">
-    <div class="arrow-up">&#9650;</div>
-    <div class="timepicker-m">00</div>
-    <div class="arrow-down">&#9660;</div>
+    <div class="arrow-up" {{action 'increase' 'minutes'}}>&#9650;</div>
+    <div class="timepicker-m">{{minutes}}</div>
+    <div class="arrow-down" {{action 'decrease' 'minutes'}}>&#9660;</div>
   </div>
   {{/if}}
   {{#if showSeconds}}
   <div class="timepicker-field timepicker-second">
-    <div class="arrow-up">&#9650;</div>
-    <div class="timepicker-s">00</div>
-    <div class="arrow-down">&#9660;</div>
+    <div class="arrow-up" {{action 'increase' 'seconds'}}>&#9650;</div>
+    <div class="timepicker-s">{{seconds}}</div>
+    <div class="arrow-down"  {{action 'decrease' 'seconds'}}>&#9660;</div>
   </div>
   {{/if}}
   {{#if showMeridian}}
   <div class="timepicker-field timepicker-meridian">
-    <div class="timepicker-md">AM</div>
+    <div class="timepicker-md">{{meridian}}</div>
   </div>
   {{/if}}
   {{#if showTimeZone}}
   <div class="timepicker-field timepicker-timezone">
-    <div class="timepicker-tz">GMT</div>
+    <div class="timepicker-tz">{{timezone}}</div>
   </div>
   {{/if}}
 </div>
