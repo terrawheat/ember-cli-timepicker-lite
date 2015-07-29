@@ -9,18 +9,50 @@
 .timepicker-display {
   display: none;
   position: absolute;
-  top: 0;
-  left: 12.5rem;
   background: #d0d0d0;
   padding: 0.35rem 1rem;
 }
 
-.timepicker input:focus + .timepicker-display {
+.timepicker-display--show {
   display: block;
+}
+
+.timepicker-display--w {
+  right: 100%;
+  top: -75%;
+}
+.timepicker-display--nw {
+  right: 100%;
+  bottom: 100%;
+}
+.timepicker-display--n {
+  left: 50%;
+  bottom: 100%;
+}
+.timepicker-display--ne {
+  left: 100%;
+  bottom: 100%;
+}
+.timepicker-display--e {
+  left: 100%;
+  top: -75%;
+}
+.timepicker-display--se {
+  left: 100%;
+  top: 100%;
+}
+.timepicker-display--s {
+  left: 50%;
+  top: 100%;
+}
+.timepicker-display--sw {
+  right: 100%;
+  top: 100%;
 }
 
 .timepicker-field {
   width: 1.2rem;
+  min-width: 34px;
   padding: 0 0.5rem;
   display: table-cell;
   vertical-align: middle;
