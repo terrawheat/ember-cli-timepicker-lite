@@ -10,10 +10,9 @@ export default Ember.Component.extend({
   eventNamespace: 'timepicker',
 
   hours: '12',
-  minutes: '58',
+  minutes: '00',
   seconds: '00',
   meridian: 'am',
-  timezone: 'UTC',
 
   hoursInterval: 1,
   minutesInterval: 1,
@@ -25,6 +24,19 @@ export default Ember.Component.extend({
   showTimeZone: false,
   showMeridian: Ember.computed('in24hr', function () {
     return this.get('in24hr') === false;
+  }),
+
+  displayString: Ember.computed('hours', 'minutes', 'seconds', function () {
+    var h = this.get('hours');
+    var m = this.get('minutes');
+    var s = this.get('seconds');
+    var output = h + ':' + m;
+
+    if (this.get('showSeconds')) {
+      output += ':' + s;
+    }
+
+    return output;
   }),
 
   limits: {
@@ -88,6 +100,7 @@ export default Ember.Component.extend({
     }
     value = this.setLeadingZero(value);
     this.set(field, value);
+    this.sendAction('valueChanged', this.parseTimeString());
   },
 
   decrease: function (field, interval) {
@@ -101,6 +114,7 @@ export default Ember.Component.extend({
     }
     value = this.setLeadingZero(value);
     this.set(field, value);
+    this.sendAction('valueChanged', this.parseTimeString());
   },
 
   setLeadingZero: function (value) {
@@ -111,5 +125,17 @@ export default Ember.Component.extend({
     }
 
     return val;
+  },
+  parseTimeString: function () {
+    var h = this.get('hours');
+    var m = this.get('minutes');
+    var s = this.get('seconds');
+    var tempDate, tz;
+
+    // Get client timezone
+    tempDate = new Date();
+    tz = tempDate.toString().match(/.*([+-]\d{4,})/)[1];
+
+    return `${h}:${m}:${s}${tz}`;
   }
 });
