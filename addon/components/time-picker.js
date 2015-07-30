@@ -26,23 +26,25 @@ export default Ember.Component.extend({
     return this.get('in24hr') === false;
   }),
 
-  displayString: Ember.computed('hours', 'minutes', 'seconds', function () {
-    var h = this.get('hours');
-    var m = this.get('minutes');
-    var s = this.get('seconds');
-    var output = h + ':' + m;
+  displayString: Ember.computed('hours', 'minutes', 'seconds', {
+    get: function () {
+      var h = this.get('hours');
+      var m = this.get('minutes');
+      var s = this.get('seconds');
+      var output = h + ':' + m;
 
-    if (this.get('showSeconds')) {
-      output += ':' + s;
+      if (this.get('showSeconds')) {
+        output += ':' + s;
+      }
+
+      return output;
     }
-
-    return output;
   }),
 
   limits: {
-    hours: { min: 1, max: 23 },
-    minutes: { min: 0, max: 59 },
-    seconds: { min: 0, max: 59 },
+    hours: { min: 0, max: 24 },
+    minutes: { min: 0, max: 60 },
+    seconds: { min: 0, max: 60 },
   },
 
   direction: 'w',
@@ -95,7 +97,7 @@ export default Ember.Component.extend({
 
     value += interval;
 
-    if (value > limit.max) {
+    if (value >= limit.max) {
       value = limit.min;
     }
     value = this.setLeadingZero(value);
@@ -110,7 +112,7 @@ export default Ember.Component.extend({
     value -= interval;
 
     if (value < limit.min) {
-      value = limit.max;
+      value = limit.max - this.get(`${field}Interval`);
     }
     value = this.setLeadingZero(value);
     this.set(field, value);
