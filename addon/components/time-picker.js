@@ -74,6 +74,8 @@ export default Ember.Component.extend({
         that.set('show', true);
       }
     });
+
+    this.sendAction('valueChanged', this.parseTimeString());
   },
 
   willDestroyElement: function () {
