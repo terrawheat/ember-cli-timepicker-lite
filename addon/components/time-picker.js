@@ -44,7 +44,7 @@ export default Ember.Component.extend({
   limits: {
     hours: { min: 0, max: 24 },
     minutes: { min: 0, max: 60 },
-    seconds: { min: 0, max: 60 },
+    seconds: { min: 0, max: 60 }
   },
 
   direction: 'w',
